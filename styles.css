@@ -1,11 +1,11 @@
 /* Общие стили */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     background: url('images/background.jpg') no-repeat center center fixed;
     background-size: cover;
+    color: #333;
 }
 
 header {
@@ -216,4 +216,115 @@ footer {
     padding-top: 20px;
     margin-top: 20px;
     font-size: 14px;
+}
+
+/* Контейнер для форм */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый фон */
+    backdrop-filter: blur(5px); /* Размытие фона */
+}
+
+.auth-form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+.auth-form h2 {
+    margin-bottom: 20px;
+}
+
+.auth-form input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Стили для кнопок в формах */
+.auth-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff5722; /* Оранжевый фон */
+    color: white; /* Белый текст */
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Плавное изменение цвета */
+}
+
+.auth-form button:hover {
+    background-color: #e64a19; /* Темнее оранжевый при наведении */
+}
+
+.error {
+    color: red;
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.back-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #ff5722; /* Оранжевый фон */
+    color: white; /* Белый текст */
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s ease; /* Плавное изменение цвета */
+}
+
+.back-button:hover {
+    background-color: #e64a19; /* Темнее оранжевый при наведении */
+}
+
+/* Выпадающее меню */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 60px; /* Чуть ниже шапки */
+    right: 20px; /* Выравниваем по правому краю */
+    background: rgba(255, 255, 255, 0.9); /* Полупрозрачный белый фон */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    z-index: 1000; /* Меню поверх другого контента */
+    width: 300px; /* Увеличили ширину на 50% */
+    height: auto; /* Автоматическая высота */
+}
+
+.dropdown-menu p {
+    margin: 0 0 15px 0; /* Увеличили отступ */
+    font-size: 16px; /* Увеличили размер текста */
+    color: #555;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 0; /* Увеличили отступы */
+    color: #333;
+    text-decoration: none;
+    font-size: 16px; /* Увеличили размер текста */
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-menu a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu a:hover {
+    color: #ff5722;
+    background-color: rgba(249, 249, 249, 0.8); /* Полупрозрачный фон при наведении */
 }
