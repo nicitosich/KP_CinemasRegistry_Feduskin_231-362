@@ -18,7 +18,13 @@ if (isset($_GET['search']) || isset($_GET['ajax'])) {
     $limit = 10;
 
     // Основной запрос для поиска кинотеатров
-    $query = "SELECT c.id, c.name, c.location, c.photo, c.affiliation, COUNT(r.cinema_id) AS review_count
+    $query = "SELECT c.id, c.name, c.location, c.photo, c.affiliation, 
+                     COUNT(r.cinema_id) AS review_count,
+                     AVG((SUBSTRING_INDEX(SUBSTRING_INDEX(r.score, ':', 1), ':', -1) +
+                          SUBSTRING_INDEX(SUBSTRING_INDEX(r.score, ':', 2), ':', -1) +
+                          SUBSTRING_INDEX(SUBSTRING_INDEX(r.score, ':', 3), ':', -1) +
+                          SUBSTRING_INDEX(SUBSTRING_INDEX(r.score, ':', 4), ':', -1) +
+                          SUBSTRING_INDEX(SUBSTRING_INDEX(r.score, ':', 5), ':', -1)) / 5) AS avg_score
               FROM cinemas c
               LEFT JOIN reviews r ON c.id = r.cinema_id
               WHERE c.name LIKE :search";
@@ -48,6 +54,12 @@ if (isset($_GET['search']) || isset($_GET['ajax'])) {
                 break;
             case 'reviews_desc':
                 $query .= " ORDER BY review_count DESC";
+                break;
+            case 'rating_asc':
+                $query .= " ORDER BY avg_score ASC";
+                break;
+            case 'rating_desc':
+                $query .= " ORDER BY avg_score DESC";
                 break;
         }
     }
@@ -80,7 +92,16 @@ $offset = 0;
 $limit = 10;
 
 // Первые 10 кинотеатров из таблицы cinemas 
-$stmt = $pdo->prepare("SELECT c.id, c.name, c.location, c.photo, c.affiliation, COUNT(r.cinema_id) AS review_count
+$stmt = $pdo->prepare("SELECT c.id, c.name, c.location, c.photo, c.affiliation, 
+                              COUNT(r.cinema_id) AS review_count,
+                              CASE 
+                                  WHEN COUNT(r.cinema_id) = 0 THEN NULL
+                                  ELSE AVG((SUBSTRING_INDEX(SUBSTRING_INDEX(r.score, ':', 1), ':', -1) +
+                                            SUBSTRING_INDEX(SUBSTRING_INDEX(r.score, ':', 2), ':', -1) +
+                                            SUBSTRING_INDEX(SUBSTRING_INDEX(r.score, ':', 3), ':', -1) +
+                                            SUBSTRING_INDEX(SUBSTRING_INDEX(r.score, ':', 4), ':', -1) +
+                                            SUBSTRING_INDEX(SUBSTRING_INDEX(r.score, ':', 5), ':', -1)) / 5)
+                              END AS avg_score
                        FROM cinemas c
                        LEFT JOIN reviews r ON c.id = r.cinema_id
                        GROUP BY c.id
@@ -118,7 +139,7 @@ $cinemas = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </nav>
     </header>
 
-    <!-- Меню пользователя -->
+    <!-- Выпадающее меню пользователя -->
     <div id="user-dropdown" class="dropdown-menu">
         <p>Логин: <?= $_SESSION['user_login'] ?></p>
         <a href="update_name.php">Изменить имя</a>
@@ -132,11 +153,13 @@ $cinemas = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <button id="filter-button">Фильтр</button>
             <div class="sort-container">
                 <select id="sort-select">
-                    <option value="">По умолчанию</option> <!-- Сортировка по умолчанию -->
+                    <option value="">По умолчанию</option>
                     <option value="name_asc">Название (А-Я)</option>
                     <option value="name_desc">Название (Я-А)</option>
                     <option value="reviews_asc">Отзывы (с меньшего)</option>
                     <option value="reviews_desc">Отзывы (с большего)</option>
+                    <option value="rating_asc">Рейтинг (с меньшего)</option>
+                    <option value="rating_desc">Рейтинг (с большего)</option>
                 </select>
             </div>
         </div>
@@ -159,7 +182,7 @@ $cinemas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <option value="">Все</option>
                     <option value="commercial">Коммерческий</option>
                     <option value="noncommercial">Некоммерческий</option>
-                    <option value="minculi">Министерство культуры</option>
+                    <option value="mincult">Министерство культуры</option>
                     <option value="othergov">Другие государственные</option>
                     <option value="control">Контролируемые</option>
                     <option value="mineduc">Министерство образования</option>
@@ -189,9 +212,10 @@ $cinemas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <div class="cinema-info">
                         <h3><?= $cinema['name'] ?></h3>
                         <p><?= $cinema['location'] ?></p>
-                        <p>Отзывы: <?= $cinema['review_count'] ?></p>
+                        <p>Отзывы: <?= $cinema['review_count'] ?> | Средняя оценка:
+                            <?= $cinema['avg_score'] == 0 ? 'Нет данных' : round($cinema['avg_score'], 1) ?></p>
                     </div>
-                    <button class="details-button">Подробнее</button> 
+                    <button class="details-button" data-id="<?= $cinema['id'] ?>">Подробнее</button>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -203,6 +227,29 @@ $cinemas = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         <?php endif; ?>
     </div>
+    <!-- Футер -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>О нас</h3>
+                <p>Данный сервис помогает людям находить лучшие кинотеатры.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <p>Email: info@cinema.com</p>
+                <p>Телефон: +7 (123) 456-78-90</p>
+            </div>
+            <div class="footer-section">
+                <h3>Открытые данные</h3>
+                <ul>
+                    Сайт использует открытые данные из источника: https://opendata.mkrf.ru/
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Кинотеатры. Все права защищены.</p>
+        </div>
+    </footer>
 </body>
 
 </html>

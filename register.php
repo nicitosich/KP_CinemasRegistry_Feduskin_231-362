@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" name="name" placeholder="Имя" required>
             <button type="submit">Зарегистрироваться</button>
             <p>Уже есть аккаунт? <a href="login.php">Войти</a></p>
+            <button type="button" onclick="history.back()">Вернуться назад</button>
         </form>
     </div>
 </body>

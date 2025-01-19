@@ -26,12 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title>Авторизация</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+
+<body>  
     <div class="auth-container">
         <form method="POST" action="login.php" class="auth-form">
             <h2>Авторизация</h2>
@@ -42,7 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="password" name="password" placeholder="Пароль" required>
             <button type="submit">Войти</button>
             <p>Нет аккаунта? <a href="register.php">Зарегистрироваться</a></p>
+            <button type="button" onclick="history.back()">Вернуться назад</button>
         </form>
     </div>
 </body>
+
 </html>
