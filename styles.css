@@ -289,6 +289,240 @@ footer {
     background-color: #e64a19; /* Темнее оранжевый при наведении */
 }
 
+/* Основные стили для body */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Контейнер для контента */
+.search-container {
+    padding: 20px;
+    margin: 20px 10%; /* Отступы по 10% по бокам */
+    background-color: rgba(255, 255, 255, 0.2); /* Полупрозрачный белый фон */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Строка поиска и кнопки */
+.search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+/* Поле ввода поиска */
+.search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #333;
+}
+
+/* Кнопки (фильтр, сортировка) */
+.search-bar button {
+    padding: 10px 20px;
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+    background-color: #e64a19;
+}
+
+.search-bar button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Контейнер для выпадающего списка сортировки */
+.sort-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Стили для выпадающего списка сортировки */
+#sort-select {
+    padding: 10px 20px;
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    appearance: none; /* Убираем стандартный стиль браузера */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: background-color 0.3s ease;
+    padding-right: 40px; /* Оставляем место для стрелки */
+}
+
+#sort-select:hover {
+    background-color: #e64a19;
+}
+
+/* Стрелка для выпадающего списка */
+.sort-container::after {
+    content: "▼";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: white;
+    pointer-events: none; /* Чтобы клик срабатывал на select */
+    font-size: 12px;
+}
+
+/* Фильтры */
+#filters {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.9); /* Полупрозрачный белый фон */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 80%; /* Ширина чуть меньше, чем у списка с кинотеатрами */
+    max-width: 800px; /* Ограничиваем максимальную ширину */
+    box-sizing: border-box; /* Учитываем padding в ширине */
+    margin-left: auto; /* Центрируем фильтры */
+    margin-right: auto; /* Центрируем фильтры */
+}
+
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+.filter-group select,
+.filter-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+    box-sizing: border-box;
+}
+
+/* Кнопка "Применить фильтры" */
+#filters button {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* Отступ сверху */
+}
+
+#filters button:hover {
+    background-color: #e64a19;
+}
+
+/* Каталог кинотеатров */
+.catalog {
+    display: flex;
+    flex-direction: column; /* Элементы в колонку */
+    gap: 20px;
+    margin: 0 10%; /* Отступы по бокам */
+}
+
+/* Карточка кинотеатра */
+.cinema-card {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2); /* Полупрозрачный фон */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.cinema-photo {
+    width: 100px; /* Фиксированная ширина фото */
+    height: 100px; /* Фиксированная высота фото */
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.cinema-info {
+    flex: 1;
+    padding: 0 15px;
+}
+
+.cinema-info h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.cinema-info p {
+    margin: 0 0 15px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Кнопка "Показать ещё" */
+.load-more {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.load-more button {
+    padding: 10px 20px;
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.load-more button:hover {
+    background-color: #e64a19;
+}
+
+/* Кнопка "Подробнее" */
+.details-button {
+    padding: 24px 42px; /* Увеличиваем размер кнопки */
+    background-color: rgba(255, 87, 34, 0.8);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px; /* Увеличиваем размер текста */
+    margin-left: auto; /* Кнопка справа */
+    transition: background-color 0.3s ease; /* Плавное изменение цвета */
+}
+
+.details-button:hover {
+    background-color: #e64a19;
+}
+
 /* Выпадающее меню */
 .dropdown-menu {
     display: none;
