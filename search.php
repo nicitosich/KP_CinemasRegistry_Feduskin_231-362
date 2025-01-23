@@ -145,8 +145,16 @@ $cinemas = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <a href="update_name.php">Изменить имя</a>
         <a href="update_password.php">Изменить пароль</a>
     </div>
-
+    <section class="description">
+        <div class="container">
+            <h1>Добро пожаловать на страницу поиска кинотеатров!</h1>
+            <p>
+            Здесь вы можете найти кинотеатры по различным параметрам: названию, местоположению, типу и количеству отзывов. Используйте фильтры и сортировку, чтобы уточнить результаты поиска. Если вы хотите узнать больше о конкретном кинотеатре, нажмите на кнопку "Подробнее".
+            </p>
+        </div>
+    </section>
     <!-- Область для поиска и фильтрации -->
+
     <div class="search-container">
         <div class="search-bar">
             <input type="text" id="search-input" placeholder="Поиск кинотеатров...">
@@ -213,7 +221,8 @@ $cinemas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <h3><?= $cinema['name'] ?></h3>
                         <p><?= $cinema['location'] ?></p>
                         <p>Отзывы: <?= $cinema['review_count'] ?> | Средняя оценка:
-                            <?= $cinema['avg_score'] == 0 ? 'Нет данных' : round($cinema['avg_score'], 1) ?></p>
+                            <?= $cinema['avg_score'] == 0 ? 'Нет данных' : round($cinema['avg_score'], 1) ?>
+                        </p>
                     </div>
                     <button class="details-button" data-id="<?= $cinema['id'] ?>">Подробнее</button>
                 </div>

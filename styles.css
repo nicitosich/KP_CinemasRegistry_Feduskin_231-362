@@ -223,12 +223,12 @@ footer {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: transparent;
     backdrop-filter: blur(5px);
 }
 
 .auth-form {
-    background: white;
+    background: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -570,13 +570,6 @@ body {
     flex: 1;
 }
 
-/* Адаптация для мобильных устройств */
-@media (max-width: 768px) {
-    .row {
-        flex-direction: column;
-    }
-}
-
 /* Стили для блока отзывов */
 .reviews-section {
     margin-top: 40px;
@@ -639,3 +632,196 @@ body {
     margin-top: 10px;
     font-style: italic;
     }
+
+/* Стили для отзыва текущего пользователя */
+.user-review {
+    background-color: #e8f5e9;
+    border-left: 4px solid #4caf50;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-review .review-text {
+    background-color: #f1f8e9; 
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.user-review p {
+    color: #2e7d32;
+}
+
+.user-review strong {
+    color: #1b5e20;
+}
+
+/* Медиа-запрос для устройств с шириной экрана до 768px */
+@media (max-width: 768px) {
+    /* Общие стили */
+    body {
+        font-size: 14px; 
+    }
+
+    /* Шапка */
+    header {
+        padding: 5px 0; 
+    }
+
+    nav {
+        flex-direction: column; 
+        align-items: flex-start;
+    }
+
+    .logo {
+        font-size: 20px; 
+    }
+
+    nav ul {
+        flex-direction: column; 
+        width: 100%; 
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    nav ul li a {
+        font-size: 18px; 
+        padding: 10px 15px; 
+        display: block; 
+    }
+
+    /* Слайд-шоу */
+    .slideshow {
+        width: 95%; 
+        height: 300px; 
+    }
+
+    .search-button {
+        padding: 10px 20px; 
+        font-size: 16px; 
+    }
+
+    /* Описание сайта */
+    .description {
+        padding: 20px 10px; 
+    }
+
+    .description h1 {
+        font-size: 28px; 
+    }
+
+    .description p {
+        font-size: 16px; 
+    }
+
+    .description ul {
+        padding-left: 15px; 
+    }
+
+    .description ul li {
+        font-size: 14px; 
+    }
+
+    /* Футер */
+    .footer-content {
+        flex-direction: column; 
+        align-items: center; 
+    }
+
+    .footer-section {
+        margin-bottom: 20px; 
+    }
+
+    /* Контейнер для форм */
+    .auth-form {
+        width: 90%; 
+    }
+
+    /* Каталог кинотеатров */
+    .catalog {
+        margin: 0 5%; 
+    }
+
+    .cinema-card {
+        flex-direction: column; 
+        align-items: flex-start; 
+    }
+
+    .cinema-photo {
+        width: 100%; 
+        height: auto; 
+    }
+
+    .cinema-info {
+        padding: 10px 0;
+    }
+
+    .details-button {
+        width: 100%; 
+        margin-top: 10px; 
+    }
+
+    /* Выпадающее меню */
+    .dropdown-menu {
+        width: 90%; 
+        right: 5%; 
+    }
+
+    /* Стили для страницы с деталями кинотеатра */
+    .cinema-details {
+        margin: 20px 5%; 
+    }
+
+    .cinema-details h1 {
+        font-size: 28px; 
+    }
+
+    .info-section {
+        padding: 10px; 
+    }
+
+    .info-section h2 {
+        font-size: 20px; 
+    }
+
+    .info-section p {
+        font-size: 14px; 
+    }
+
+    .row {
+        flex-direction: column; 
+    }
+
+    /* Стили для блока отзывов */
+    .reviews-section {
+        padding: 10px; 
+    }
+
+    .rating-criteria label {
+        width: 100%; 
+    }
+
+    .review-text textarea {
+        font-size: 14px; 
+    }
+
+    .reviews-list .review-item {
+        padding: 10px; 
+    }
+
+    .review-item .review-text {
+        font-size: 14px;
+    }
+
+    .user-review {
+        padding: 10px; 
+    }
+
+    .user-review .review-text {
+        font-size: 14px; 
+    }
+}

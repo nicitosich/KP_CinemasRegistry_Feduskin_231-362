@@ -61,7 +61,6 @@ function formatDateTime($dateTime)
             <ul>
                 <li><a href="index.php">Главная</a></li>
                 <li><a href="search.php">Поиск</a></li>
-                <li><a href="#">Обратная связь</a></li>
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li><a href="#" id="user-menu"><?= $_SESSION['user_name'] ?></a></li>
                     <li><a href="logout.php">Выйти</a></li>
@@ -74,7 +73,6 @@ function formatDateTime($dateTime)
 
     <div class="cinema-details">
         <!-- Кнопка возврата в каталог -->
-        <a href="search.php" class="back-button">← Вернуться в каталог</a>
 
         <h1><?= htmlspecialchars($cinema['name']) ?></h1>
         <!-- Увеличенное фото -->
@@ -248,11 +246,10 @@ function formatDateTime($dateTime)
                 <p>Чтобы оставить отзыв, <a href="login.php">авторизуйтесь</a>.</p>
             <?php endif; ?>
 
-            <!-- Список отзывов -->
-            <div class="reviews-list">
-                <h3>Последние отзывы</h3>
-                <?php
-                // Получаем последние 10 отзывов для этого кинотеатра
+            <?php
+            // Получаем последние 10 отзывов для этого кинотеатра
+            $reviews = []; // Инициализируем переменную как пустой массив
+            try {
                 $stmt = $pdo->prepare("SELECT r.*, u.name AS user_name FROM reviews r
                            JOIN users u ON r.user_id = u.id
                            WHERE r.cinema_id = :cinema_id
@@ -260,13 +257,25 @@ function formatDateTime($dateTime)
                            LIMIT 10");
                 $stmt->bindValue(':cinema_id', $cinemaId, PDO::PARAM_INT);
                 $stmt->execute();
-                $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC); // Получаем отзывы
+            } catch (PDOException $e) {
+                // Логируем ошибку, если запрос не удался
+                error_log("Ошибка при получении отзывов: " . $e->getMessage());
+                $reviews = []; // Оставляем переменную пустым массивом
+            }
+            ?>
 
-                if (count($reviews) > 0):
-                    foreach ($reviews as $review):
+            <!-- Список отзывов -->
+            <div class="reviews-list">
+                <h3>Последние отзывы</h3>
+                <?php if (count($reviews) > 0): ?>
+                    <?php foreach ($reviews as $review): ?>
+                        <?php
                         $scores = explode(':', $review['score']);
+                        // Проверяем, является ли отзыв оставленным текущим пользователем
+                        $isCurrentUserReview = isset($_SESSION['user_id']) && $review['user_id'] == $_SESSION['user_id'];
                         ?>
-                        <div class="review-item">
+                        <div class="review-item <?= $isCurrentUserReview ? 'user-review' : '' ?>">
                             <p><strong><?= htmlspecialchars($review['user_name']) ?></strong>
                                 (<?= formatDateTime($review['date']) ?>)</p>
                             <p>Удобство расположения: <?= renderStars($scores[0]) ?></p>
@@ -278,12 +287,12 @@ function formatDateTime($dateTime)
                                 <p><?= nl2br(htmlspecialchars($review['text'])) ?></p>
                             </div>
                         </div>
-                    <?php endforeach;
-                else: ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
                     <p>Пока нет отзывов. Будьте первым!</p>
                 <?php endif; ?>
             </div>
-
+            
             <?php
             // Функция для отображения звездочек
             function renderStars($score)
@@ -291,9 +300,9 @@ function formatDateTime($dateTime)
                 $stars = '';
                 for ($i = 1; $i <= 5; $i++) {
                     if ($i <= $score) {
-                        $stars .= '&#9733;'; 
+                        $stars .= '&#9733;';
                     } else {
-                        $stars .= '&#9734;'; 
+                        $stars .= '&#9734;';
                     }
                 }
                 return $stars;

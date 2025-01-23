@@ -8,6 +8,7 @@ session_start();
     <meta charset="UTF-8">
     <title>Главная страница</title>
     <link rel="stylesheet" href="styles.css">
+
 </head>
 
 <body>
